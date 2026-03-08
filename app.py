@@ -550,14 +550,6 @@ def quiz():
         answer_feedback=answer_feedback,
     )
 
-    return render_template(
-        "quiz.html",
-        question=question,
-        question_num=current + 1,
-        show_answer=show_answer,
-    )
-
-
 @app.route("/next_question", methods=["POST"])
 @geheimer_code_erforderlich
 def next_question():
