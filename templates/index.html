@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>🎬 Quiz Lebensmittel – Startseite</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="manifest" href="/manifest.json" />
+
+</head>
+
+
+<body>
+  <!--Header-->
+  <header class="site-header">
+    <div class="container">
+      <img src="/static/images/logo.png" alt="Logo" class="logo" />
+      <h1 class="site-title"></h1>
+    </div>
+  </header>
+
+  <div class="title-with-menu">
+    <h3 class="site-title">🎉 Willkommen zum Quiz!</h3>
+    <div class="dropdown-menu-wrapper">
+      <button class="dropdown-toggle">☰</button>
+      <ul class="dropdown-menu">
+        <li><a href="{{ url_for('info') }}">ℹ️ Info</a></li>
+        <li><a href="{{ url_for('settings') }}">⚙️ Einstellungen</a></li>
+        <li><a href="/logout">🔓 Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <br>
+  <br>
+
+
+<div class="button-container">
+  <form action="{{ url_for('categories') }}" method="get">
+    <button type="submit" class="btn btn-learn">🎯 Zum Quiz</button>
+  </form>
+</div>
+</div>
+<br>
+<br>
+    <div class="button-container">
+      <form action="{{ url_for('lernen') }}" method="get">
+        <button type="submit" class="btn btn-learn">🎓 Codes Lernen</button>
+      </form>
+    </div>
+  </div>
+<br>
+<br>
+
+
+  <footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2025 Quiz Lebensmittel – Alle Rechte vorbehalten</p>
+        <p>&copy; Adama Ndiaye – Egmating - Deutschland</p>
+    </div>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/static/service-worker.js')
+          .then((registration) => {
+            console.log('✅ Service Worker registrato con successo:', registration);
+          })
+          .catch((error) => {
+            console.error('❌ Registrazione Service Worker fallita:', error);
+          });
+      });
+    }
+
+    // JavaScript modificato per il menu dropdown
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuButton = document.querySelector(".dropdown-toggle");
+      const menuWrapper = document.querySelector(".dropdown-menu-wrapper");
+      const dropdownMenu = document.querySelector(".dropdown-menu");
+
+      // Apri/chiudi menu al click
+      menuButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        menuWrapper.classList.toggle("open");
+      });
+
+      // Chiudi menu quando si clicca fuori
+      document.addEventListener("click", (e) => {
+        if (!menuWrapper.contains(e.target)) {
+          menuWrapper.classList.remove("open");
+        }
+      });
+
+      // Chiudi menu dopo la selezione
+      dropdownMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          menuWrapper.classList.remove("open");
+        });
+      });
+    });
+  </script>
+
+</body>
+</html>

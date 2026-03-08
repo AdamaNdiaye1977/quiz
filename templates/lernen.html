@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>🎓 Codes Lernen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+    <!-- Stili precedenti mantenuti -->
+        <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f9f9f9;
+            color: #333;
+            padding: 20px;
+            text-align: center;
+        }
+
+       /* Titolo principale */
+    	h1, h2 {
+        font-size: 2em;
+        margin-bottom: 50px;
+        color:rgb(5, 114, 9);
+         }
+
+         .category-button {
+            margin: 12px;
+            padding: 16px 32px;
+            font-size: 24px;
+            font-weight: bold; /* rende il testo in grassetto */
+            border-radius: 20px;
+            border: none;
+            cursor: pointer;
+            background: linear-gradient(to right, #6dd5ed, #2193b0);
+            color: black; /* colore del testo */
+            transition: transform 0.2s ease, background-color 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .category-button:hover {
+            transform: translateY(-2px);
+            background: linear-gradient(to right, #2193b0, #6dd5ed);
+        }
+
+        .card {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            width: 90%;
+            max-width: 700px;
+            margin: 40px auto;
+            text-align: center;
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+        
+
+        .card img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 16px;
+            margin: 0 auto;
+            display: block;
+        }
+
+        .produkt-name {
+            font-size: 40px;
+            font-weight: bold;
+            margin-top: 20px;
+            color: #222;
+            display: inline-block;
+        }
+        /* Codice per immagine e animazione */
+        @keyframes zoomInOut{
+            0% {
+              transform: scale(1);
+            }
+            25% {
+              transform: scale(1.8);
+            }
+            50% {
+              transform: scale(1);
+            }
+            75% {
+              transform: scale(1.8);
+            }
+            100% {
+              transform: scale(1);
+            }
+          }
+          
+          .produkt-code {
+            font-size: 60px; /* più grande anche di base */
+            color: #007BFF;
+            margin-top: 5px;
+            font-weight: bold;
+            animation: zoomInOut 2s ease;
+          }
+          
+          /* Per mobile ancora più grande */
+          @media (max-width: 600px) {
+            .produkt-code {
+              font-size: 48px;
+            }
+          }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top:25px;
+        }
+
+        .nav-buttons a {
+            padding: 10px 20px;
+            background:rgb(62, 158, 86);
+            color: black; /* colore del testo */
+            font-weight: bold; /* grassetto */
+            text-decoration: none;
+            border-radius: 20px;
+            transition: background 0.3s;
+            font-size: 20px;
+        }
+
+        .nav-buttons a:hover {
+            background: #176d85;
+            color: black; /* mantiene il testo nero anche al hover */
+        }
+
+        .home-button {
+            display: inline-block;
+            margin-top: 40px;
+            padding: 12px 28px;
+            font-size: 30px;
+            border-radius: 20px;
+            background: linear-gradient(to right,rgb(138, 145, 77),rgb(157, 168, 5));
+            color: white;
+            text-decoration: none;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s ease;
+        }
+
+        .home-button:hover {
+            transform: scale(1.05);
+        }
+
+        .audio-button {
+            padding: 8px 16px;
+            background: #6dd5ed;
+            color: black;            /* testo nero */
+            font-weight: bold;       /* testo in grassetto */
+            border: none;
+            border-radius: 12px;
+            font-size: 25px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .audio-button {
+            padding: 8px 16px;
+            background: #6dd5ed;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .audio-button:hover {
+            background: #2193b0;
+        }
+    </style>
+</head>
+<body>
+<!-- Header e contenuto mantenuto invariato -->
+ <!--Header-->
+  
+  <header class="site-header">
+    <div class="container">
+      <img src="/static/images/logo.png" alt="Logo" class="logo" />
+    </div>
+  </header>
+    
+  <div class="title-with-menu">
+    <h1 class="site-title">🎓Codes Lernen</h1>
+    <div class="dropdown-menu-wrapper">
+      <button class="dropdown-toggle">☰</button>
+      <ul class="dropdown-menu">
+        <li><a href="{{ url_for('info') }}">ℹ️ Info</a></li>
+        <li><a href="{{ url_for('settings') }}">⚙️ Einstellungen</a></li>
+        <li><a href="/logout">🔓 Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <br>
+  <br>
+
+<!-- Categorie sempre visibili -->
+<div>
+    <form method="get" action="/lernen">
+        <button type="submit" name="category" value="bake-off" class="category-button">🧁 Bake-Off</button>
+        <button type="submit" name="category" value="obs" class="category-button">🍇 OBS</button>
+        <button type="submit" name="category" value="gemüse" class="category-button">🥦 Gemüse</button>
+        <button type="submit" name="category" value="blumen" class="category-button">🌸 Blumen</button>
+    </form>
+</div>
+
+{% if category %}
+<div class="card">
+    <div id="image-name" class="produkt-name">{{ item.name }}</div>
+    <img src="{{ url_for('static', filename='images/' + item.img + '.jpg') }}" alt="{{ item.name }}">
+    <div class="produkt-code">Code: {{ item.code }}</div>
+
+    <div class="nav-buttons">
+        <a href="{{ url_for('lernen', category=category, index=index|int - 1) }}">← Zurück</a>
+        
+        <div class="audio-buttons">
+            <button id="speak-btn">🔊 Hören</button>
+            <button id="repeat-btn" style="display:none; margin-left:10px;">🔁 Wiederholen</button>
+        </div>
+
+        <a href="{{ url_for('lernen', category=category, index=index|int + 1) }}">Weiter →</a>
+    </div>
+</div>
+{% endif %}
+
+<a href="/" class="home-button">🏠 Zurück zur Startseite</a>
+<br>
+<br>
+<br>
+
+<script>
+    class SpeechHelper {
+      constructor() {
+        this.synth = window.speechSynthesis;
+        this.voices = [];
+        this.safariFirstClick = true;
+        this.isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+  
+        // Fix avanzato per Safari/iOS
+        if (/^((?!chrome|android).)*safari/i.test(navigator.userAgent) || this.isIOS) {
+          this.setupSafariFix();
+        } else {
+          this.loadVoices(); // Caricamento normale per altri browser
+        }
+      }
+  
+      // NUOVO: Fix specifico per Safari/iOS
+      setupSafariFix() {
+        // 1. Sblocco al primo click
+        const unlock = () => {
+          this.safariFirstClick = false;
+          this.loadVoices();
+          document.removeEventListener('click', unlock);
+        };
+        document.addEventListener('click', unlock);
+  
+        // 2. Precauzione per iOS
+        if (this.isIOS) {
+          document.addEventListener('touchstart', () => {
+            this.synth.cancel(); // Reset vocale al tocco
+          }, { passive: true });
+        }
+      }
+  
+      /* 
+      🚀 TUTTO IL RESTO RIMANE IDENTICO AL TUO SCRIPT ORIGINALE 
+      (nessuna modifica alla logica esistente)
+      */
+      async speakCode(code) {
+        if (!code) return;
+  
+        const cleanCode = code.replace("Code: ", "").replace(/\s+/g, '');
+        await this.speak("Code");
+  
+        if (cleanCode.length === 4) {
+          await this.speak(cleanCode.substring(0, 2));
+          await this.speak(cleanCode.substring(2, 4));
+        } else {
+          await this.speak(cleanCode);
+        }
+      }
+  
+      async loadVoices() {
+        return new Promise((resolve) => {
+          const voices = this.synth.getVoices();
+          if (voices.length > 0) return resolve(voices);
+  
+          this.synth.onvoiceschanged = () => {
+            const loadedVoices = this.synth.getVoices();
+            if (loadedVoices.length > 0) {
+              this.voices = loadedVoices;
+              resolve(loadedVoices);
+              this.synth.onvoiceschanged = null;
+            }
+          };
+  
+          setTimeout(() => resolve(this.synth.getVoices()), 1500);
+        });
+      }
+  
+      async speak(text, options = {}) {
+        if (!text) return;
+  
+        await this.loadVoices();
+        return new Promise((resolve) => {
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = "de-DE";
+          utterance.rate = options.rate || 0.9;
+  
+          utterance.voice = this.voices.find(v => v.name.includes("Anna")) ||
+                            this.voices.find(v => v.lang.startsWith("de")) || null;
+  
+          utterance.onend = resolve;
+          this.synth.cancel();
+  
+          setTimeout(() => this.synth.speak(utterance), this.safariFirstClick ? 300 : 0);
+        });
+      }
+  
+      async autoRead() {
+        await new Promise(resolve => setTimeout(resolve, 500));
+        const title = document.getElementById("image-name");
+        const code = document.querySelector(".produkt-code");
+  
+        if (title) await this.speak(title.textContent);
+        if (code) await this.speakCode(code.textContent);
+      }
+    }
+  
+    // INIZIALIZZAZIONE (identica alla tua versione)
+    document.addEventListener("DOMContentLoaded", async () => {
+      if (!window.speechSynthesis) {
+        console.warn("SpeechSynthesis non supportato");
+        return;
+      }
+  
+      const speechHelper = new SpeechHelper();
+  
+      if (window.location.pathname.includes("/lernen")) {
+        setTimeout(() => speechHelper.autoRead(), 800);
+      }
+  
+      document.getElementById("speak-btn")?.addEventListener("click", () => {
+        speechHelper.autoRead();
+      });
+    });
+  </script>
+
+ <!-- JavaScript modificato per il menu dropdown -->
+ <script>
+    // JavaScript modificato per il menu dropdown
+    document.addEventListener("DOMContentLoaded", () => {
+      const menuButton = document.querySelector(".dropdown-toggle");
+      const menuWrapper = document.querySelector(".dropdown-menu-wrapper");
+      const dropdownMenu = document.querySelector(".dropdown-menu");
+
+      // Apri/chiudi menu al click
+      menuButton.addEventListener("click", (e) => {
+        e.stopPropagation();
+        menuWrapper.classList.toggle("open");
+      });
+
+      // Chiudi menu quando si clicca fuori
+      document.addEventListener("click", (e) => {
+        if (!menuWrapper.contains(e.target)) {
+          menuWrapper.classList.remove("open");
+        }
+      });
+
+      // Chiudi menu dopo la selezione
+      dropdownMenu.querySelectorAll("a").forEach(link => {
+        link.addEventListener("click", () => {
+          menuWrapper.classList.remove("open");
+        });
+      });
+    });
+  </script>
+
+<!-- Footer e altri script -->
+<footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2025 quizlebensmittel.de – Alle Rechte vorbehalten</p>
+        <p>&copy; Adama Ndiaye – Egmating - Deutschland</p>
+    </div>
+</footer>
+</body>
+</html>

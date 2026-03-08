@@ -1,0 +1,630 @@
+/* =================================== */
+/*            RESET BASE              */
+/* =================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* =================================== */
+/*              BODY                  */
+/* =================================== */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #ffffff; /* Chiaro di default */
+  color: #000000;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* =================================== */
+/*        CONTENITORE QUIZ            */
+/* =================================== */
+.quiz-container {
+  max-width: 500px;
+  margin: auto;
+  background-color: #ffffff;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  text-align: center;
+}
+
+/* =================================== */
+/*             TITOLI                 */
+/* =================================== */
+h1, h2 {
+  font-size: 2em;
+  margin-bottom: 25px;
+  color: #4CAF50;
+}
+
+.quiz-title {
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+  margin: 0;
+}
+
+/* =================================== */
+/*       CARD: IMMAGINE E NOME        */
+/* =================================== */
+.card img {
+  width: 100%;
+  max-width: 225px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+
+.card h3 {
+  font-size: 1.5em;
+  margin-top: 10px;
+}
+
+.card {
+  position: relative; /* per posizionamento assoluto interno */
+}
+/* =================================== */
+/*              INPUT                 */
+/* =================================== */
+input[type="text"] {
+  padding: 10px;
+  font-size: 1.2em;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  width: 250px;
+  margin-top: 15px;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+input[type="text"]:focus {
+  border-color: #4CAF50;
+  outline: none;
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* =================================== */
+/*             ETICHETTA              */
+/* =================================== */
+label {
+  display: block;
+  margin-top: 20px;
+  font-size: 1.1em;
+  color: #555;
+}
+
+/* =================================== */
+/*             PULSANTI               */
+/* =================================== */
+/* Stili base condivisi tra button e .btn */
+button,
+.btn {
+  font-size: 1.2em;
+  padding: 12px 20px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+  -webkit-appearance: none; /* Fix Android */
+  appearance: none;
+  background-color: #4CAF50; /* Colore base condiviso */
+  color: white; /* Testo bianco per contrasto */
+  text-decoration: none;
+  display: inline-block;
+}
+
+/* Stili specifici per .button */
+.button {
+  box-shadow: 0 8px 12px rgba(3, 3, 3, 0.1);
+  width: auto; /* Override della width di .btn */
+}
+
+.button:hover {
+  background-color: #45a049;
+  box-shadow: 0 10px 18px rgba(0, 0, 0, 0.15);
+}
+
+/* Stili specifici per .btn */
+.btn {
+  width: 200px;
+  margin: 10px 0;
+}
+
+.btn:hover {
+  background-color: #45a049;
+}
+
+/* Stili per varianti speciali */
+.btn-learn {
+  background-color: #2ca84b;
+}
+
+.btn-learn:hover {
+  background-color: #8f3292;
+}
+
+/* =================================== */
+/*           SELECT INPUT             */
+/* =================================== */
+.select-input {
+  padding: 12px;
+  font-size: 1.1em;
+  border-radius: 10px;
+  border: 2px solid #ddd;
+  width: 100%;
+  margin-bottom: 20px;
+  transition: border 0.3s ease;
+}
+
+.select-input:focus {
+  border-color: #4CAF50;
+  outline: none;
+}
+
+/* =================================== */
+/*     FEEDBACK RISPOSTA E STILI      */
+/* =================================== */
+.antwort p {
+  font-size: 1.2em;
+  margin-top: 20px;
+}
+
+strong {
+  font-size: 1.5em;
+  color: #f44336;
+}
+
+/* =================================== */
+/*          TASTIERA VIRTUALE         */
+/* =================================== */
+.virtual-keyboard {
+  display: grid;
+  grid-template-columns: repeat(3, 110px);
+  grid-template-rows: repeat(4, 90px);
+  gap: 14px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.key {
+  background-color: #eee;
+  border: 2px solid #ccc;
+  font-size: 32px;
+  font-weight: bold;
+  text-align: center;
+  border-radius: 14px;
+  cursor: pointer;
+  user-select: none;
+  box-shadow: 0 5px 8px rgba(0, 0, 0, 0.15);
+  transition: background 0.2s ease, transform 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.key:hover {
+  background-color: #ddd;
+}
+
+.key.clear {
+  background-color: #f88;
+}
+
+.key.confirm {
+  background-color: #8f8;
+}
+
+/* =================================== */
+/*              HEADER                */
+/* =================================== */
+.site-header, .site-footer {
+  width: 100%;
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: #ffffff;
+  border: 2px solid #e0e0e0;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  padding: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  border-radius: 60px 2px 60px 2px;
+}
+
+.site-header .container,
+.site-footer .container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 20px;
+  padding: 0 20px;
+  width: 100%;
+}
+
+.site-title {
+  font-size: 1.8em;
+  font-weight: bold;
+  color: #4CAF50;
+  text-align: center;
+}
+
+.site-footer p {
+  font-size: 1.1em;
+  color: #555;
+  margin: 0;
+}
+
+/* =================================== */
+/*                LOGO                */
+/* =================================== */
+.logo-adam {
+  height: 40px;
+  width: auto;
+  border-radius: 12px;
+}
+
+.logo {
+  width: 90vw;
+  max-width: 700px;
+  height: auto;
+  max-height: 120px;
+  display: block;
+  margin: 0 auto;
+  border-radius: 50px;
+  object-fit: contain;
+}
+
+/* =================================== */
+/*      BARRA DI AVANZAMENTO          */
+/* =================================== */
+.progress-container {
+  width: 100%;
+  height: 20px;
+  background-color: #ddd;
+  border-radius: 10px;
+  margin: 20px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar {
+  width: 0;
+  height: 100%;
+  background-color: #4CAF50;
+  border-radius: 10px;
+  transition: width 1s ease;
+}
+
+#progress-text {
+  font-size: 0.8em;
+  color: #4CAF50;
+}
+
+/* =================================== */
+/*            EXIT BUTTON             */
+/* =================================== */
+.exit-button,
+input[type="button"].exit-button {
+  -webkit-appearance: none;
+  appearance: none;
+  margin-top: 16px;
+  background-color: #f44336 !important;
+  background-image: linear-gradient(to bottom, #f44336, #d32f2f) !important;
+  color: white !important;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  border: none !important;
+  box-shadow: none !important;
+}
+
+/* Fix per stati attivi su mobile */
+.exit-button:active,
+.exit-button:hover {
+  background-color: #d32f2f !important;
+}
+/* =================================== */
+/*          NOME + BOTTONE            */
+/* =================================== */
+.name-and-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.speak-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #4CAF50;
+  cursor: pointer;
+  padding: 2px 4px;;
+  z-index: 10;
+  transition: transform 0.2s ease;
+  max-width: 50px;
+}
+
+.speak-button:hover {
+  transform: scale(1.2);
+}
+
+/* =================================== */
+/*           DARK THEME               */
+/* =================================== */
+body.dark-theme {
+  background-color: #121212;
+  color: #ffffff;
+}
+
+.card.dark-theme {
+  background-color: #333;
+  border: 1px solid #444;
+}
+
+/* =================================== */
+/*          TOGGLE THEME              */
+/* =================================== */
+.theme-toggle {
+  margin: 20px 0;
+}
+
+.theme-toggle-checkbox {
+  cursor: pointer;
+}
+
+/* =================================== */
+/*         DROPDOWN MENU              */
+/* =================================== */
+.dropdown-menu-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.dropdown-toggle {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  color: #4CAF50;
+  padding: 0.4rem 0.6rem;
+}
+
+.title-with-menu {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* oppure 'start' se preferisci allineato a sinistra */
+  gap: 1rem; /* spazio tra titolo e menu */
+}
+
+.title-with-menu .site-title {
+  margin: 0;
+  font-size: 1.8rem;
+}
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 0.3rem;
+  list-style: none;
+  padding: 0.5rem;;
+  margin: 0;
+  min-width: 150px;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+  border-radius: 0.5rem;
+  z-index: 1;
+  list-style: none;
+}
+
+.dropdown-menu li {
+  padding: 10px;
+}
+
+.dropdown-menu li a {
+  text-decoration: none;
+  color: #333;
+  display: block;
+}
+
+.dropdown-menu-wrapper.open .dropdown-menu {
+  display: block;
+}
+
+/* =================================== */
+/*                LOGIN               */
+/* =================================== */
+.alert-error {
+  background-color: #f8d7da;
+  color: #721c24;
+}
+
+.form-container {
+  max-width: 400px;
+  margin: 30px auto;
+  padding: 20px;
+  border: 2px solid #ddd;
+  border-radius: 10px;
+  background-color: #f9f9f9;
+  text-align: center;
+}
+
+.form-title {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 15px;
+}
+
+.input-group {
+  margin-bottom: 25px;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 12px 15px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: border 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: #e60000;
+  outline: none;
+}
+
+.login-btn {
+  padding: 12px 25px;
+  background-color: #e60000;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.login-btn:hover {
+  background-color: #cc0000;
+}
+
+.flash.error {
+  color: red;
+  font-weight: bold;
+  margin-top: 15px;
+}
+
+/* =================================== */
+/*        MEDIA QUERY: MOBILE         */
+/* =================================== */
+@media (max-width: 600px) {
+  .quiz-container,
+  .site-header, .site-footer {
+    padding: 20px 10px;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  input[type="text"] {
+    width: 100%;
+  }
+
+  .virtual-keyboard {
+    grid-template-columns: repeat(3, 45px);
+    grid-template-rows: repeat(4, 45px);
+  }
+
+  .key {
+    font-size: 16px;
+  }
+
+  .button {
+    max-width: 190px;
+  }
+
+  .logo {
+    max-height: 90px;
+    border-radius: 35px;
+  }
+
+  .speak-button {
+    font-size: 0.9rem;
+    padding: 2px 6px;
+  }
+
+  .dropdown-toggle {
+    font-size: 1rem; /* Riduci ulteriormente su dispositivi mobili */
+  }
+
+}
+
+/* =================================== */
+/*        Per Pagina categories        */
+/* =================================== */
+.quiz-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.menu-wrapper {
+  position: relative;
+}
+
+.category-button {
+  padding: 20px 40px;
+  font-size: 1.5em;
+  border-radius: 12px;
+  background-color: #1aa815;
+  color: white;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  margin: 15px;
+}
+
+.category-button {
+  transition: all 0.4s ease; /* Animazione fluida */
+}
+
+.category-button.selected {
+  background-color: #6430c5 !important; /* Viola */
+  transform: scale(1.05); /* Leggero zoom */
+  box-shadow: 0 0 15px rgba(146, 50, 145, 0.6); /* Glow effect */
+}
+.category-button:hover {
+  background-color:rgb(166, 65, 197);
+}
+
+.button-container {
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.button[type="submit"] {
+  background-color: #ec2c7c;
+  color: white;
+  padding: 15px 30px;
+  border-radius: 12px;
+  font-size: 1.5em;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.3s ease;
+}
+.button[type="submit"]:hover {
+  background-color: #044563;
+}
+
+category-button.selected {
+    background-color:rgb(146, 68, 170);
+    border-color: #3399ff;
+    font-weight: bold;
+  }
+
+  .flash-message {
+    background-color: #ffe0e0;
+    color: #a00;
+    padding: 1rem;
+    margin: 1rem auto;
+    border-radius: 0.5rem;
+    text-align: center;
+    max-width: 500px;
+    font-weight: bold;
+  }
+  

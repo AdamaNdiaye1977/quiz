@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Einstellungen</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <header class="site-header">
+    <div class="container">
+      <img src="/static/images/logo.png" alt="Logo" class="logo" />
+      
+    </div>
+  </header>
+<br>
+<br>
+  <div class="settings-container">
+    <h1 class="site-title" >Einstellungen</h1>
+    <form id="settings-form">
+      <label for="voiceSelect">🗣 Stimme wählen:</label>
+      <select id="voiceSelect">
+        <option value="Stefan">Stefan (männlich)</option>
+        <option value="Katja">Katja (weiblich)</option>
+      </select>
+
+      <label for="audioToggle">🔈 Lautsprecher:</label>
+      <input type="checkbox" id="audioToggle" checked>
+
+      <button type="button" onclick="testVoice()">🔊 Probiere Stimme</button>
+      <button type="submit">💾 Einstellungen speichern</button>
+    </form>
+    <form action="{{ url_for('index') }}" method="GET">
+      <button type="submit">Zurück zur Startseite</button>
+    </form>
+  </div>
+<br>
+<br>
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Quiz Lebensmittel – Alle Rechte vorbehalten</p>
+    </div>
+  </footer>
+
+  <script>
+    // Carica preferenze salvate
+    window.onload = function () {
+      const savedVoice = localStorage.getItem("preferredVoice");
+      const audioEnabled = localStorage.getItem("audioEnabled");
+  
+      if (savedVoice) document.getElementById("voiceSelect").value = savedVoice;
+      document.getElementById("audioToggle").checked = audioEnabled !== "false";
+      
+      // Carica subito le voci disponibili
+      loadVoices();
+    };
+  
+    // Funzione per caricare le voci disponibili
+    function loadVoices() {
+      const synth = window.speechSynthesis;
+      let voices = synth.getVoices();
+      
+      // Se non ci sono voci, aspetta l'evento onvoiceschanged
+      if (voices.length === 0) {
+        synth.onvoiceschanged = function() {
+          voices = synth.getVoices();
+          populateVoiceSelect(voices);
+          synth.onvoiceschanged = null;
+        };
+      } else {
+        populateVoiceSelect(voices);
+      }
+    }
+  
+    // Popola il select con le voci realmente disponibili
+    function populateVoiceSelect(voices) {
+      const voiceSelect = document.getElementById("voiceSelect");
+      voiceSelect.innerHTML = '';
+      
+      // Filtra solo voci tedesche
+      const germanVoices = voices.filter(v => v.lang.startsWith('de'));
+      
+      // Se non ci sono voci tedesche, mostra un avviso
+      if (germanVoices.length === 0) {
+        voiceSelect.innerHTML = '<option value="">Keine deutschen Stimmen verfügbar</option>';
+        return;
+      }
+      
+      // Aggiungi le voci disponibili
+      germanVoices.forEach(voice => {
+        const gender = voice.name.includes('female') ? ' (weiblich)' : 
+                      voice.name.includes('male') ? ' (männlich)' : '';
+        const option = document.createElement("option");
+        option.value = voice.name;
+        option.textContent = voice.name + gender;
+        voiceSelect.appendChild(option);
+      });
+      
+      // Ripristina la preferenza salvata se disponibile
+      const savedVoice = localStorage.getItem("preferredVoice");
+      if (savedVoice && germanVoices.some(v => v.name === savedVoice)) {
+        voiceSelect.value = savedVoice;
+      }
+    }
+  
+    // Salva preferenze
+    document.getElementById("settings-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+      const voice = document.getElementById("voiceSelect").value;
+      const audio = document.getElementById("audioToggle").checked;
+  
+      localStorage.setItem("preferredVoice", voice);
+      localStorage.setItem("audioEnabled", audio);
+  
+      alert("✅ Einstellungen gespeichert!");
+    });
+  
+    // Test voce
+    function testVoice() {
+      const voiceName = document.getElementById("voiceSelect").value;
+      const synth = window.speechSynthesis;
+      const voices = synth.getVoices();
+      
+      if (!voiceName) {
+        alert("Bitte wählen Sie zuerst eine Stimme aus");
+        return;
+      }
+      
+      const voice = voices.find(v => v.name === voiceName);
+      if (!voice) {
+        alert("Stimme nicht verfügbar");
+        return;
+      }
+  
+      const utterance = new SpeechSynthesisUtterance("Hallo! Das ist eine Testnachricht");
+      utterance.lang = "de-DE";
+      utterance.voice = voice;
+      
+      synth.speak(utterance);
+    }
+  </script>
+</body>
+</html>

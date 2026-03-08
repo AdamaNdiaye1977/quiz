@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>&#128214; Quiz – Ergebnis</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <style>
+    .repeat-progress {
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .repeat-bar {
+      width: 100%;
+      height: 20px;
+      background: #eee;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 10px;
+    }
+
+    .repeat-bar-inner {
+      height: 100%;
+      width: {{ (repeat_count + 1) * 33.33 }}%;
+      background-color: #4CAF50;
+      transition: width 0.5s;
+    }
+
+    .celebrate {
+      animation: pulse 1.2s ease-in-out 2;
+      color: #4CAF50;
+      font-weight: bold;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+  </style>
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container">
+      <img src="/static/images/logo.png" alt="Logo" class="logo" />
+    <h1 class="site-title"></h1>
+    </div>
+  </header>
+<br>
+<br>
+  <div class="result-container">
+    <h2>&#128214; Quiz abgeschlossen!</h2>
+    <p>Du hast <strong>{{ score }}</strong> von 7 Punkten erreicht.</p>
+
+    <!-- Stato ripetizioni -->
+    <div class="repeat-progress">
+      <p>Wiederholungen: <strong>{{ repeat_count + 1 }} / 3</strong></p>
+      <div class="repeat-bar">
+        <div class="repeat-bar-inner"></div>
+      </div>
+    </div>
+
+    <!-- Messaggio ripetizione -->
+    {% if repeat_count == 0 %}
+      <p>Du hast das Quiz <strong>zum ersten Mal</strong> abgeschlossen.</p>
+    {% elif repeat_count == 1 %}
+      <p>Du hast das Quiz <strong>einmal wiederholt</strong>.</p>
+    {% elif repeat_count == 2 %}
+      <p class="celebrate">🎉 Du hast das Quiz <strong>dreimal abgeschlossen</strong>. Beim nächsten Mal bekommst du neue Bilder!</p>
+    {% endif %}
+
+    <!-- Pulsanti -->
+    <form action="{{ url_for('start_quiz') }}" method="POST">
+      <input type="hidden" name="category" value="{{ category }}">
+      <button type="submit">Quiz wiederholen</button>
+    </form>
+    <form action="{{ url_for('index') }}" method="GET">
+      <button type="submit">Zurück zur Startseite</button>
+    </form>
+  </div>
+<br>
+<br>
+   <!-- Footer -->
+   <footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2025 QuizLebensmittel – Alle Rechte vorbehalten</p>
+        <p>&copy; Adama Ndiaye – Egmating - Deutschland</p>
+    </div>
+  </footer>
+
+  {% if repeat_count == 2 %}
+  <audio id="celebration-sound" autoplay>
+    <source src="{{ url_for('static', filename='sounds/success.mp3') }}" type="audio/mpeg">
+    Dein Browser unterstützt keine Audioausgabe.
+  </audio>
+  {% endif %}
+
+  
+</body>
+</html>

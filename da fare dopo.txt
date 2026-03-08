@@ -1,0 +1,11 @@
+******************
+Per avviare l applicazione in modalita lab - pro 
+        # Route per la pagina delle categorie
+@app.route("/categories")
+def categories():
+    return render_template("categories.html")
+
+
+# ----- AVVIO APPLICAZIONE -----
+if __name__ == "__main__":
+    app.run(debug=True, port=5000)  # Cambia 5000 con un'altra porta se necessario

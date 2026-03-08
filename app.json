@@ -1,0 +1,8 @@
+{
+    "name": "Quiz Lebensmittel",
+    "description": "Penny Quiz App.",
+    "repository": "https://github.com/tuo-username/tuo-repo",
+    "logo": "https://www.herokucdn.com/favicon.ico",
+    "keywords": ["flask", "python", "heroku"],
+    "addons": ["heroku-postgresql"]
+}

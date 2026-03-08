@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Wähle Kategorie – Quiz Lebensmittel</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+  <link rel="manifest" href="/manifest.json" />
+  
+
+<body>
+  <!--Header-->
+  <header class="site-header">
+    <div class="container">
+      <img src="/static/images/logo.png" alt="Logo" class="logo" />
+    </div>
+  </header>
+    
+  <div class="title-with-menu">
+    <h1 class="site-title">Wähle Kategorie</h1>
+    <div class="dropdown-menu-wrapper">
+      <button class="dropdown-toggle">☰</button>
+      <ul class="dropdown-menu">
+        <li><a href="{{ url_for('info') }}">ℹ️ Info</a></li>
+        <li><a href="{{ url_for('settings') }}">⚙️ Einstellungen</a></li>
+        <li><a href="/logout">🔓 Logout</a></li>
+      </ul>
+    </div>
+  </div>
+  <br>
+
+    <form action="/start_quiz" method="post" class="start-form">
+        <div class="button-grid">
+          <button type="button" class="category-button" data-category="bake-off">🧁 Bake-Off</button>
+          <button type="button" class="category-button" data-category="obs">🍇 Obs</button>
+          <br>
+          <button type="button" class="category-button" data-category="gemüse">🥦 Gemüse</button>
+          <button type="button" class="category-button" data-category="blumen">🌸 Blumen</button>
+        </div>
+    
+        <!-- Campo nascosto per salvare la categoria -->
+        <input type="hidden" name="category" id="selected-category" />
+    
+        <div style="margin-top: 2rem;">
+          <button type="submit" class="button">🎬 Quiz starten</button>
+          {% with messages = get_flashed_messages() %}
+        {% if messages %}
+             <div class="flash-message">
+                  {% for message in messages %}
+                     <p>{{ message }}</p>
+                  {% endfor %}
+            </div>
+        {% endif %}
+{% endwith %}
+
+        </div>
+      </form>
+      <br>
+      <br>
+      <form action="{{ url_for('index') }}" method="GET">
+        <button type="submit" class="button">Zurück zur Startseite</button>
+      </form>
+    </div>
+      
+ <br>
+ <br>
+ <br>
+  <!--Footer-->  
+  <footer class="site-footer">
+    <div class="container">
+      <p>&copy; 2025 Quiz Lebensmittel – Alle Rechte vorbehalten</p>
+      <p>&copy; Adama Ndiaye – Egmating - Deutschland</p>
+    </div>
+  </footer>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/static/service-worker.js')
+          .then((registration) => {
+            console.log('✅ Service Worker registrato con successo:', registration);
+          })
+          .catch((error) => {
+            console.error('❌ Registrazione Service Worker fallita:', error);
+          });
+      });
+         // JavaScript modificato per il menu dropdown
+    document.addEventListener("DOMContentLoaded", () => {
+        const menuButton = document.querySelector(".dropdown-toggle");
+        const menuWrapper = document.querySelector(".dropdown-menu-wrapper");
+        const dropdownMenu = document.querySelector(".dropdown-menu");
+  
+        // Apri/chiudi menu al click
+        menuButton.addEventListener("click", (e) => {
+          e.stopPropagation();
+          menuWrapper.classList.toggle("open");
+        });
+  
+        // Chiudi menu quando si clicca fuori
+        document.addEventListener("click", (e) => {
+          if (!menuWrapper.contains(e.target)) {
+            menuWrapper.classList.remove("open");
+          }
+        });
+  
+        // Chiudi menu dopo la selezione
+        dropdownMenu.querySelectorAll("a").forEach(link => {
+          link.addEventListener("click", () => {
+            menuWrapper.classList.remove("open");
+          });
+        });
+      });
+    }
+  </script>
+
+  <!--script per il la scelta del bottone poi clicca su zum quiz-->
+
+ <script>
+  document.querySelectorAll(".category-button").forEach(button => {
+    button.addEventListener("click", function() {
+      // Rimuovi la selezione precedente
+      document.querySelectorAll(".category-button").forEach(btn => {
+        btn.classList.remove("selected");
+        btn.style.backgroundColor = "#1aa815"; // Colore originale
+      });
+      
+      // Aggiungi la classe selected e cambia colore
+      this.classList.add("selected");
+      this.style.backgroundColor = "#8f3292"; // Colore hover modificato
+      
+      // Imposta il valore nel campo nascosto
+      document.getElementById("selected-category").value = this.dataset.category;
+    });
+  });
+</script>
+</body>
+</html>

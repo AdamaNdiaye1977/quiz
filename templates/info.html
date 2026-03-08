@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <title>Info</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <body>
+    <!--Header-->
+    <header class="site-header">
+      <div class="container">
+        <img src="/static/images/logo.png" alt="Logo" class="logo" />
+      </div> <!-- chiusura container -->
+    </header>
+    <br>
+    <br>
+  <h1>ℹ️ Über das Quiz</h1>
+  <p>Dies ist eine kleine Info-Seite.</p>
+  <form action="{{ url_for('index') }}" method="GET">
+    <button type="submit">Zurück zur Startseite</button>
+  </form>
+  <br>
+  <br>
+   <!-- Footer -->
+   <footer class="site-footer">
+    <div class="container">
+        <p>&copy; 2025 Quiz Lebensmittel – Alle Rechte vorbehalten</p>
+        <p>&copy; Adama Ndiaye – Egmating - Deutschland</p>
+    </div>
+  </footer>
+</body>
+</html>
