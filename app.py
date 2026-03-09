@@ -468,9 +468,15 @@ def logout():
 
 
 @app.route("/")
+#
+# def index():
+  #  if not session.get("auth"):
+   #     return redirect(url_for("willkommen"))
+    # return render_template("index.html")
+
+# per saltare la pagina wilkommen    
 def index():
-    if not session.get("auth"):
-        return redirect(url_for("willkommen"))
+    # Accesso diretto alla dashboard senza codice segreto
     return render_template("index.html")
 
 
