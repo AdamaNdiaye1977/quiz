@@ -9,25 +9,25 @@
 </head>
 
 <body>
-  <!--Header-->
+  <!-- Header -->
   <header class="site-header">
     <div class="container">
-        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
-        <h1 class="site-title">Quiz Lebensmittel</h1>
-        <nav>
-            <!-- ✅ Menu -->
-            <div class="dropdown-menu-wrapper">
-                <button class="dropdown-toggle">☰</button>
-                <ul class="dropdown-menu">
-                    <li><a href="{{ url_for('info') }}">ℹ️ Info</a></li>
-                   <!-- <li><a href="{{ url_for('result') }}">📊 Resultate</a></li> -->
-                    <li><a href="{{ url_for('settings') }}">⚙️ Einstellungen</a></li>
-                  <!-- <li><a href="{{ url_for('logout') }}">📊 Logout</a></li> -->
-                  <a href="/logout" style="font-size: 24px;">🔓 Logout</a>
-                </ul>
-            </div>
-        </nav>
-    </div> <!-- chiusura container -->
+      <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+      <h1 class="site-title">Quiz Lebensmittel</h1>
+      <nav>
+        <!-- ✅ Menu -->
+        <div class="dropdown-menu-wrapper">
+          <button class="dropdown-toggle" type="button">☰</button>
+          <ul class="dropdown-menu">
+            <li><a href="{{ url_for('info') }}">ℹ️ Info</a></li>
+            <!-- <li><a href="{{ url_for('result') }}">📊 Resultate</a></li> -->
+            <li><a href="{{ url_for('settings') }}">⚙️ Einstellungen</a></li>
+            <!-- <li><a href="{{ url_for('logout') }}">📊 Logout</a></li> -->
+            <li><a href="/logout" style="font-size: 24px;">🔓 Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    </div>
   </header>
 
   <div class="quiz-container">
@@ -41,7 +41,7 @@
         <option value="blumen">Blumen</option>
       </select>
       <div>
-      <button type="submit">🎬 Quiz starten</button>
+        <button type="submit">🎬 Quiz starten</button>
       </div>
     </form>
 
@@ -56,8 +56,8 @@
   <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
-        <p>&copy; 2025 Quiz Lebensmittel – Alle Rechte vorbehalten</p>
-        <p>&copy; Adama Ndiaye – Egmating - Deutschland</p>
+      <p>&copy; 2025 Quiz Lebensmittel – Alle Rechte vorbehalten</p>
+      <p>&copy; Adama Ndiaye – Egmating - Deutschland</p>
     </div>
   </footer>
 
@@ -82,13 +82,14 @@
       const menuButton = document.querySelector(".dropdown-toggle");
       const menuWrapper = document.querySelector(".dropdown-menu-wrapper");
 
-      // Gestisci il click sul pulsante del menu
-      menuButton.addEventListener("click", () => {
-        menuWrapper.classList.toggle("open");
-      });
+      if (menuButton && menuWrapper) {
+        menuButton.addEventListener("click", () => {
+          menuWrapper.classList.toggle("open");
+        });
+      }
     });
   </script>
-  
-  <script src="{{ url_for('static', filename='js/app.js') }}"></script> <!-- Assicurati che il percorso sia corretto -->
+
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
 </body>
 </html>
