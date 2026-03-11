@@ -8,8 +8,8 @@
 
 </head>
 <body>
-  <audio id="successSound" src="/sounds/success.mp3" preload="auto"></audio>
-  <audio id="errorSound" src="/sounds/error.mp3" preload="auto"></audio>
+  <audio id="successSound" src="{{ url_for('static', filename='sounds/success.mp3') }}" preload="auto"></audio>
+  <audio id="errorSound" src="{{ url_for('static', filename='sounds/error.mp3') }}" preload="auto"></audio>
 
   <!--Header-->
   <header class="site-header">
@@ -222,7 +222,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   <!-- DB offline -->
   <script defer src="{{ url_for('static', filename='js/offline-db.js') }}"></script>
-  <script src="js/app.js"></script>
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script>
   <br>
   <br>
  <!-- Footer -->

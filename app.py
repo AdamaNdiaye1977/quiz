@@ -4,6 +4,8 @@ import random
 
 from functools import wraps
 
+import os
+
 app = Flask(__name__)
 app.secret_key = "geheime_schlüssel"  # In produzione usare un segreto complesso!
 app.config["TEMPLATES_AUTO_RELOAD"] = True
@@ -468,15 +470,9 @@ def logout():
 
 
 @app.route("/")
-#
-# def index():
-  #  if not session.get("auth"):
-   #     return redirect(url_for("willkommen"))
-    # return render_template("index.html")
-
-# per saltare la pagina wilkommen    
 def index():
-    # Accesso diretto alla dashboard senza codice segreto
+    if not session.get("auth"):
+        return redirect(url_for("willkommen"))
     return render_template("index.html")
 
 
@@ -507,7 +503,7 @@ def start_quiz():
 
     if category not in quiz_data:
         flash("⚠️ Bitte wähle zuerst eine Kategorie aus.")
-        return redirect(url_for("categories"))  # O qualunque sia la pagina di partenza
+        return redirect(url_for("index"))  # ← CORRETTO: torna alla home
 
     questions_list = quiz_data[category]
     if len(questions_list) < 7:
@@ -1091,10 +1087,4 @@ def lernen():
 
 # ----- AVVIO APPLICAZIONE -----
 if __name__ == "__main__":
-    # Ottieni la porta dalla variabile d'ambiente PORT (fornita da Render)
-    # Se non esiste, usa 5000 come fallback (per lo sviluppo locale)
-    port = int(os.environ.get('PORT', 5000))
-    
-    # Disabilita il debug in produzione
-    # host='0.0.0.0' è necessario per Render
-    app.run(host='0.0.0.0', port=port, debug=False)
+    app.run(debug=True, port=5000)  # Cambia 5000 con un'altra porta se necessario

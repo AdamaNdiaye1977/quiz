@@ -6,50 +6,54 @@
   <title>🎬 Quiz Lebensmittel – Startseite</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
   <link rel="manifest" href="/manifest.json" />
-
 </head>
-
 
 <body>
   <!--Header-->
   <header class="site-header">
     <div class="container">
-      <img src="/static/images/logo.png" alt="Logo" class="logo" />
-      <h1 class="site-title"></h1>
-    </div>
+        <img src="{{ url_for('static', filename='images/logo.png') }}" alt="Logo" class="logo">
+        <h1 class="site-title">Quiz Lebensmittel</h1>
+        <nav>
+            <!-- ✅ Menu -->
+            <div class="dropdown-menu-wrapper">
+                <button class="dropdown-toggle">☰</button>
+                <ul class="dropdown-menu">
+                    <li><a href="{{ url_for('info') }}">ℹ️ Info</a></li>
+                   <!-- <li><a href="{{ url_for('result') }}">📊 Resultate</a></li> -->
+                    <li><a href="{{ url_for('settings') }}">⚙️ Einstellungen</a></li>
+                  <!-- <li><a href="{{ url_for('logout') }}">📊 Logout</a></li> -->
+                  <a href="/logout" style="font-size: 24px;">🔓 Logout</a>
+                </ul>
+            </div>
+        </nav>
+    </div> <!-- chiusura container -->
   </header>
 
-  <div class="title-with-menu">
-    <h3 class="site-title">🎉 Willkommen zum Quiz!</h3>
-    <div class="dropdown-menu-wrapper">
-      <button class="dropdown-toggle">☰</button>
-      <ul class="dropdown-menu">
-        <li><a href="{{ url_for('info') }}">ℹ️ Info</a></li>
-        <li><a href="{{ url_for('settings') }}">⚙️ Einstellungen</a></li>
-        <li><a href="/logout">🔓 Logout</a></li>
-      </ul>
+  <div class="quiz-container">
+    <h1 class="quiz-title">🎉 Willkommen zum Quiz!</h1>
+    <form action="/start_quiz" method="post" class="start-form">
+      <label for="category" class="input-label">Wähle eine Kategorie:</label>
+      <select name="category" id="category" class="select-input">
+        <option value="bake-off">Bake-Off</option>
+        <option value="gemüse">Gemüse</option>
+        <option value="obs">Obs</option>
+        <option value="blumen">Blumen</option>
+      </select>
+      <div>
+      <button type="submit">🎬 Quiz starten</button>
+      </div>
+    </form>
+
+    <!-- Aggiungiamo il pulsante "Codes Lernen" con lo stesso stile -->
+    <div class="button-container">
+      <form action="{{ url_for('lernen') }}" method="get">
+        <button type="submit" class="btn btn-learn">🎓Codes Lernen</button>
+      </form>
     </div>
   </div>
-  <br>
-  <br>
 
-
-<div class="button-container">
-  <form action="{{ url_for('start_quiz') }}" method="post">
-    <button type="submit" class="btn btn-learn">🎯 Zum Quiz</button>
-  </form>
-</div>
-<br>
-<br>
-<div class="button-container">
-  <form action="{{ url_for('lernen') }}" method="get">
-    <button type="submit" class="btn btn-learn">🎓 Codes Lernen</button>
-  </form>
-</div>
-<br>
-<br>
-
-
+  <!-- Footer -->
   <footer class="site-footer">
     <div class="container">
         <p>&copy; 2025 Quiz Lebensmittel – Alle Rechte vorbehalten</p>
@@ -57,6 +61,7 @@
     </div>
   </footer>
 
+  <!-- Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
@@ -69,34 +74,21 @@
           });
       });
     }
+  </script>
 
-    // JavaScript modificato per il menu dropdown
+  <!-- JavaScript per il menu dropdown -->
+  <script>
     document.addEventListener("DOMContentLoaded", () => {
       const menuButton = document.querySelector(".dropdown-toggle");
       const menuWrapper = document.querySelector(".dropdown-menu-wrapper");
-      const dropdownMenu = document.querySelector(".dropdown-menu");
 
-      // Apri/chiudi menu al click
-      menuButton.addEventListener("click", (e) => {
-        e.stopPropagation();
+      // Gestisci il click sul pulsante del menu
+      menuButton.addEventListener("click", () => {
         menuWrapper.classList.toggle("open");
-      });
-
-      // Chiudi menu quando si clicca fuori
-      document.addEventListener("click", (e) => {
-        if (!menuWrapper.contains(e.target)) {
-          menuWrapper.classList.remove("open");
-        }
-      });
-
-      // Chiudi menu dopo la selezione
-      dropdownMenu.querySelectorAll("a").forEach(link => {
-        link.addEventListener("click", () => {
-          menuWrapper.classList.remove("open");
-        });
       });
     });
   </script>
-
+  
+  <script src="{{ url_for('static', filename='js/app.js') }}"></script> <!-- Assicurati che il percorso sia corretto -->
 </body>
 </html>
