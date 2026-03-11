@@ -15,11 +15,11 @@
         }
 
        /* Titolo principale */
-    	h1, h2 {
-        font-size: 2em;
-        margin-bottom: 25px;
-        color: #4CAF50;
-         }
+        h1, h2 {
+            font-size: 2em;
+            margin-bottom: 25px;
+            color: #4CAF50;
+        }
 
         .category-button {
             margin: 10px;
@@ -42,8 +42,8 @@
         .card {
             background: white;
             border-radius: 20px;
-            padding: 25px;
-            width: 360px;
+            padding: 30px;
+            width: min(92vw, 520px);
             margin: 40px auto;
             text-align: center;
             box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
@@ -51,7 +51,7 @@
         }
 
         .card img {
-            width: 220px;
+            width: min(100%, 300px);
             height: auto;
             border-radius: 16px;
             margin: 0 auto;
@@ -75,8 +75,11 @@
 
         .nav-buttons {
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
+            align-items: center;
+            gap: 18px;
             margin-top: 25px;
+            flex-wrap: wrap;
         }
 
         .nav-buttons a {
@@ -86,6 +89,7 @@
             text-decoration: none;
             border-radius: 12px;
             transition: background 0.3s;
+            display: inline-block;
         }
 
         .nav-buttons a:hover {
@@ -117,7 +121,7 @@
         }
         
         .audio-button {
-            padding: 8px 16px;
+            padding: 10px 18px;
             background: #6dd5ed;
             color: white;
             border: none;
@@ -129,6 +133,31 @@
 
         .audio-button:hover {
             background: #2193b0;
+        }
+
+        @media (max-width: 600px) {
+            .card {
+                padding: 22px;
+                width: min(94vw, 420px);
+            }
+
+            .produkt-name {
+                font-size: 20px;
+            }
+
+            .produkt-code {
+                font-size: 22px;
+            }
+
+            .nav-buttons {
+                gap: 14px;
+            }
+
+            .nav-buttons a,
+            .audio-button {
+                width: 100%;
+                max-width: 220px;
+            }
         }
     </style>
 
@@ -168,9 +197,9 @@
     <div class="nav-buttons">
         <a href="{{ url_for('lernen', category=category, index=index|int - 1) }}">← Zurück</a>
 
-        <!-- Nuovo pulsante per ripetizione continua -->
         <div class="audio-buttons">
-            <button id="repeat-btn" class="audio-button" title="Ripeti codice">🔁 Repeat</button>
+            <button id="repeat-btn" class="audio-button" title="Ripeti codice" type="button">🔁 Repeat</button>
+            <button id="mute-btn" class="audio-button" title="Audio an/aus" type="button">🔊 Mute</button>
         </div>
 
         <a href="{{ url_for('lernen', category=category, index=index|int + 1) }}">Weiter →</a>
@@ -186,9 +215,16 @@
         const cardTitle = document.getElementById("image-name");
         const cardCode = document.querySelector(".produkt-code");
         const preferredVoice = localStorage.getItem("preferredVoice") || "Stefan";
-        const audioEnabled = localStorage.getItem("audioEnabled") !== "false";
+        let audioEnabled = localStorage.getItem("audioEnabled") !== "false";
         
         let repeatLoop = null; // variabile per il loop di ripetizione
+
+        function updateMuteButton() {
+            const muteButton = document.getElementById("mute-btn");
+            if (muteButton) {
+                muteButton.innerText = audioEnabled ? "🔊 Mute" : "🔇 Unmute";
+            }
+        }
 
         function speakText(text, delay = 0) {
             if (!audioEnabled || !text) return;
@@ -202,7 +238,8 @@
 
         function speakNameAndCode() {
             if (cardTitle && cardCode) {
-                speakText(cardTitle.textContent); // Subito
+                window.speechSynthesis.cancel();
+                speakText(cardTitle.textContent);
 
                 const code = cardCode.textContent.replace(/\s+/g, '');
                 const delayStart = 1500;
@@ -220,19 +257,42 @@
             }
         }
 
-        // Tasto "Repeat One"
         const repeatButton = document.getElementById("repeat-btn");
+        const muteButton = document.getElementById("mute-btn");
 
         if (repeatButton) {
             repeatButton.addEventListener("click", () => {
                 if (repeatLoop) {
-                    clearInterval(repeatLoop);  // Ferma il loop se è già attivo
-                    repeatButton.innerText = "🔁 Repeat"; // Ritorna al testo originale
+                    clearInterval(repeatLoop);
+                    repeatButton.innerText = "🔁 Repeat";
                     repeatLoop = null;
                 } else {
-                    repeatButton.innerText = "⏸️ Stop Repeat"; // Cambia il testo del pulsante
-                    repeatLoop = setInterval(speakNameAndCode, 3000); // Ripeti ogni 3 secondi
+                    repeatButton.innerText = "⏸️ Stop Repeat";
+                    speakNameAndCode();
+                    repeatLoop = setInterval(speakNameAndCode, 3000);
                 }
+            });
+        }
+
+        if (muteButton) {
+            updateMuteButton();
+
+            muteButton.addEventListener("click", () => {
+                audioEnabled = !audioEnabled;
+                localStorage.setItem("audioEnabled", audioEnabled);
+
+                if (!audioEnabled) {
+                    window.speechSynthesis.cancel();
+                    if (repeatLoop) {
+                        clearInterval(repeatLoop);
+                        repeatLoop = null;
+                        if (repeatButton) {
+                            repeatButton.innerText = "🔁 Repeat";
+                        }
+                    }
+                }
+
+                updateMuteButton();
             });
         }
 
